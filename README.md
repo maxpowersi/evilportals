@@ -1,19 +1,19 @@
-## Evil Portals
+## Evil Portals+
 
-![](https://img.shields.io/github/license/kbeflo/evilportals.svg?style=flat-square) 
-[![](https://img.shields.io/discord/413223793016963073.svg?style=flat-square)](https://discord.gg/Ka557WS)
+Evil Portals+ is a collection of portals that can be loaded into the Evil Portal module and can be used for phishing attacks against WiFi clients in order to obtain credentials or infect the victims with malware using the [Hak5](https://hak5.org/) [WiFi Pineapple](https://wifipineapple.com/) [Tetra](http://hakshop.myshopify.com/products/wifi-pineapple?variant=11303845317) and [Nano](http://hakshop.myshopify.com/products/wifi-pineapple?variant=81044992).
 
-[Evil Portals](https://github.com/kbeflo/evilportals) is a collection of portals that can be loaded into the Evil Portal module and can be used for phishing attacks against WiFi clients in order to obtain credentials or infect the victims with malware using the [Hak5](https://hak5.org/) [WiFi Pineapple](https://wifipineapple.com/) [Tetra](http://hakshop.myshopify.com/products/wifi-pineapple?variant=11303845317) and [Nano](http://hakshop.myshopify.com/products/wifi-pineapple?variant=81044992).
+This project requires you to install captive portal module. Install on the Pineapple, Modules -> Manage Modules -> Get Modules from WiFiPineapple.com -> Evil Portal.
 
-This project requires you to install [Evil Portal](https://github.com/frozenjava/EvilPortalNano) captive portal module created by [frozenjava](https://github.com/frozenjava). Install on the Pineapple, Modules -> Manage Modules -> Get Modules from WiFiPineapple.com -> Evil Portal 3.1.
+You can install EvilPortalReloaded, a fork of EvilPortal, that works betters in some specific case.
+
+This repo is forked, the original is from [Kleo Bercero](https://kbeflo.github.io/). I have just forked, and add some custom portals.
 
 ---
-
 #### Usage
 
 Clone the repository
 
-	git clone https://github.com/kbeflo/evilportals
+	git clone RepoURL
 
 Change directory to evilportals/portals/
 
@@ -22,10 +22,6 @@ Change directory to evilportals/portals/
 Copy the portals you wish to use on the Tetra at `/root/portals/` or on the Nano at `/sd/portals/`
 
     scp -r portal-login root@172.16.42.1:/root/portals/
-
-Alternatively you can use [Filezilla](https://filezilla-project.org/) to copy the portalsgoogle.com/
-
-	Host: sftp://172.16.42.1 Username: root Password: lamepassword Port: 22 
 
 Finally on the WiFi Pineapple web interface, start the Evil Portal module and then activate the portal you wish to use.
 
@@ -52,5 +48,3 @@ Evil Portals is distributed under the GNU GENERAL PUBLIC LICENSE v3. See [LICENS
 Some of the portals here are also available for [Wifiphisher](https://github.com/wifiphisher/wifiphisher), available here [wifiphisher/extra-phishing-pages](https://github.com/wifiphisher/extra-phishing-pages)
 
 Discussion thread - [Hak5 Forums](https://forums.hak5.org/index.php?/topic/39856-evil-portals/)
-
-[Kleo Bercero](https://kbeflo.github.io/)

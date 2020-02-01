@@ -1,0 +1,23 @@
+Vue.component('principal', {
+    template: //html
+    `
+    <main>
+        <img src="assets/images/message-brand.svg" width="231" height="101" alt="Message" class="message-brand">
+        <div class="card card-form">
+            <h1 class="h1 card-title">Accedé a la nueva <br> Red WiFi</h1>
+            <a href="#" class="btn btn-primary" title="Ingresar" role="button" @click="onClick">ingresar</a>
+            <span class="text">Sólo clientes</span>
+        </div>
+           
+    </main>
+    `,
+    methods: Object.assign({}, {
+        onClick: function (e) {
+            e.preventDefault();
+
+            this.obtenerPaso1();
+        }
+    }, Vuex.mapActions(['obtenerPaso1']))
+
+}
+)

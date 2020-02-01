@@ -1,0 +1,31 @@
+Vue.component('error', {
+  template: //html
+    `
+    <main>
+      <div class="card card-feedback card-feedback--error">
+
+          <h1 class="h1 card-title">No podemos habilitar <br> el acceso WiFi</h1>
+
+          <!-- <img class="feedback-icon" src="./images/icons/warning.svg" alt="Warning" width="65" height="65"> -->
+
+          <svg class="feedback-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 65" width="65" height="65">
+              <g fill="none" fill-rule="evenodd" transform="translate(2.5 2)">
+                  <path fill="#FF2C2C" fill-rule="nonzero" vector-effect="non-scaling-stroke"
+                      d="M32.708168 44.75c0 1.495666-1.212502 2.708168-2.708168 2.708168-1.495666 0-2.708168-1.212502-2.708168-2.708168 0-1.495666 1.212502-2.708168 2.708168-2.708168 1.495666 0 2.708168 1.212502 2.708168 2.708168zM30 36.625c-1.121254 0-2.03125-.909996-2.03125-2.03125V11.573082c0-1.121254.909996-2.03125 2.03125-2.03125s2.03125.909996 2.03125 2.03125V34.59375c0 1.121254-.909996 2.03125-2.03125 2.03125z" />
+                  <circle cx="30" cy="30" r="30" stroke="#FF3126" stroke-width="4" shape-rendering="geometricPrecision"
+                      vector-effect="non-scaling-stroke" />
+              </g>
+          </svg>
+
+          <p class="feedback-message" v-if="objError.codigo != 0">
+              {{objError.mensaje}}
+          </p>
+
+      </div>
+  </main>
+  `
+  ,
+  computed: Object.assign({},
+    Vuex.mapState(['objError']))
+
+})

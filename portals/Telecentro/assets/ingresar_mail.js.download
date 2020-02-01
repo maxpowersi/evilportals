@@ -1,0 +1,112 @@
+Vue.component('ingresar_mail', {
+    template: //html
+    `
+        <main>
+
+            <div class="message">
+                <p>Identificate con tu e-mail <br> para comenzar a navegar</p>
+            </div>
+
+            <div class="card card-form">
+
+                <form @submit="onSubmit" class="user-auth" novalidate>
+
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" @input="updateEmail" :value="email" placeholder="Tu e-mail de acceso" class="form-control"
+                            tabindex="1" autofocus required>
+                        <label class="form-control-label sr-only" for="email">Tu e-mail de acceso</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="opt_in"  tabindex="3">
+                        <label class="form-check-label" for="opt_in" @click="check"> Quiero recibir notificaciones</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" tabindex="4">ingresar</button>
+
+                </form>
+
+            </div>
+
+            <div class="toast-notification toast-error">
+                <div class="toast-content">
+                    <strong>Hubo un error</strong>
+                    <p>
+                        Por favor, verificá los datos ingresados...
+                    </p>
+                </div>
+            </div>
+
+        </main>
+    `,
+    methods: Object.assign({}, {
+
+        check: function (e) {
+            var c = document.getElementById('opt_in');
+
+            if(c.checked == false) {
+                this.$store.commit('updateOptIn', true)
+            } else {
+                this.$store.commit('updateOptIn', false)
+            }
+        },
+
+        onSubmit: function (e) {
+            e.preventDefault();
+            if (this.checkForm()) {
+                this.verificarEmail();
+            }
+        },
+        updateEmail(e) {
+            this.$store.commit('updateEmail', e.target.value)
+        },
+        updateError(e) {
+            this.$store.commit('updateMensajeError', e.target.value)
+        },
+        checkForm() {
+
+            var form = document.getElementsByClassName('user-auth')[0];
+            var button = document.getElementsByClassName('btn-primary');
+            var toastError = document.getElementsByClassName('toast-error');
+
+            button[0].setAttribute('disabled', true);
+
+            var mensaje = '';
+            var codigo = 0;
+            if (!this.email) {
+                mensaje += "e-mail requerido.";
+            } else if (!this.validEmail(this.email)) {
+                mensaje += "e-mail valido requerido. ";
+            }
+
+            if (mensaje.length) {
+
+                form.classList.add('was-validated');
+                codigo = 1;
+                toastError[0].classList.add('show');
+
+                setTimeout(function () {
+                    toastError[0].classList.remove('show');
+                    form.classList.remove('was-validated');
+                    form.querySelectorAll('input[type=email]')[0].focus();
+                    button[0].removeAttribute('disabled',false);
+                }, 2750);
+
+                this.$store.commit('updateMensajeError', { mensaje: mensaje, codigo: codigo })
+                return false;
+            }
+            return true;
+
+        },
+        validEmail: function (email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        }
+    }, Vuex.mapActions(['verificarEmail'])),
+    computed: Object.assign({},
+        Vuex.mapState(['email', 'objError', 'opt_in']))
+    ,
+    mounted() {
+
+    }
+})

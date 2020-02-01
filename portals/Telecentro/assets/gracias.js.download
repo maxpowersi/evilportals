@@ -1,0 +1,30 @@
+Vue.component('gracias',{
+    template: //html
+    `
+    <main>
+
+                <div class="card card-feedback card-feedback-success">
+                    
+                    
+                    <h1 class="h1 card-title">Conectado con éxito</h1>
+
+                    <!-- <img class="feedback-icon" src="./images/icons/checkmark.svg" alt="checkmark" width="65" height="65"> -->
+
+                    <svg class="feedback-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 65" width="65" height="65">
+                      <g fill="none" fill-rule="evenodd" transform="translate(2 2)">
+                        <path fill="#5BB719" fill-rule="nonzero" vector-effect="non-scaling-stroke" d="M42.74241 15.419322c-.970964-.560572-2.214142-.2275-2.774714.743464l-12.98991 22.50009L19.71 31.959804c-.767786-.818554-2.051536-.861144-2.870196-.093464-.818554.767786-.86125 2.051536-.093358 2.872214l9.286822 8.565768c.767786.818554 2.051536.861144 2.87009.093464.247786-.231642 14.584322-25.201732 14.584322-25.201732.558766-.972876.225588-2.216054-.74527-2.776732z" />
+                        <circle cx="30" cy="30" r="30" stroke="#5BB719" stroke-width="4" shape-rendering="geometricPrecision" vector-effect="non-scaling-stroke" />
+                      </g>
+                    </svg>
+
+                    <p class="feedback-message">
+                        ¡Ya estás navegando gratis con <strong>Telecentro WiFi</strong>!
+                    </p>
+
+                </div>
+           
+    </main>
+
+    `,
+    
+})

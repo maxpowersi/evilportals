@@ -1,0 +1,203 @@
+Vue.component('sucursal', {
+    template: //html
+        `
+        <div>
+
+        <main>
+
+            <div class="message">
+                <p>Identificate con tus datos de <br> Sucursal Virtual para comenzar <br> a navegar</p>    
+            </div>
+
+            <div class="card card-form">
+                
+                <form @submit="onSubmit" class="user-auth" novalidate>
+                    
+                    <div class="form-group">
+                        <input :value="email" @input="updateEmail" type="email" id="email" name="email" placeholder="Tu e-mail de acceso" class="form-control" tabindex="1" autofocus required>
+                        <label class="form-control-label sr-only" for="email">Tu e-mail de acceso</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input :value="pass" @input="updatePass" type="password" id="password" name="password" placeholder="Contraseña" class="form-control" tabindex="2" required>
+                        <label class="form-control-label sr-only" for="password">Contraseña</label>
+                    </div>
+
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="opt_in" id="opt-in" tabindex="3">
+                    <label class="form-check-label" for="opt-in" @click="check"> Quiero recibir notificaciones</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" tabindex="4">ingresar</button>
+
+                </form>
+
+            </div>
+
+        </main>
+
+        <div>
+
+                <div class="toast-notification toast-error">
+                    <div class="toast-content">
+                        <strong>Hubo un error</strong>
+                        <p >
+                            Por favor, verificá los datos ingresados...
+                        </p>
+                    </div>
+                </div>
+
+                <div class="toast-notification toast-error">
+                    <div class="toast-content">
+                        <strong>Hubo un error</strong>
+                        <p >
+                            No pudimos identificarte
+                        </p>
+                    </div>
+                </div>
+
+                <div class="toast-notification toast-info show">
+                    <div class="toast-content">
+                        <strong>¿No estás registrado en Sucursal Virtual?</strong>
+                        <p>
+                            Hacelo <a href="https://telecentro.com.ar/login" title="Registrate en Sucursal Virtual" rel="noopener">desde aquí</a>
+                        </p>
+                    </div>
+                </div>
+
+        </div>
+            
+            
+
+    `
+    ,
+    methods: Object.assign({}, {
+
+        check: function (e) {
+            var c = document.getElementById('opt-in');
+
+            if (c.checked == false) {
+                this.$store.commit('updateOptIn', true)
+            } else {
+                this.$store.commit('updateOptIn', false)
+            }
+        },
+
+        onSubmit: function (e) {
+            e.preventDefault();
+
+            if (this.checkForm()) {
+                this.verificarSucVirt();
+            }
+        },
+
+        updatePass(e) {
+            this.$store.commit('updatePass', e.target.value)
+        },
+        updateEmail(e) {
+            this.$store.commit('updateEmail', e.target.value)
+        },
+        updateError(e) {
+            this.$store.commit('updateMensajeError', e.target.value)
+        },
+        checkForm: function () {
+
+            var form = document.getElementsByClassName('user-auth')[0];
+            var button = document.getElementsByClassName('btn-primary');
+            var toastError = document.getElementsByClassName('toast-error');
+            var toastInfo = document.getElementsByClassName('toast-info')[0];
+
+            button[0].setAttribute('disabled', true);
+
+            mensaje = '';
+            codigo = 0;
+
+            if (!this.pass) {
+                mensaje += "Clave requerida. ";
+            }
+            if (!this.email) {
+                mensaje += "e-mail requerido.";
+            } else if (!this.validEmail(this.email)) {
+                mensaje += "e-mail valido requerido. ";
+            }
+
+            if (mensaje.length) {
+                form.classList.add('was-validated');
+
+                toastInfo.classList.remove('show');
+                toastError[0].classList.add('show');
+
+                setTimeout(function () {
+                    toastError[0].classList.remove('show');
+                    toastInfo.classList.add('show');
+                    form.classList.remove('was-validated');
+                    form.querySelectorAll('input[type=email]')[0].focus();
+                    button[0].removeAttribute('disabled');
+                }, 2750);
+
+                this.$store.commit('updateMensajeError', { mensaje: mensaje, codigo: 1 })
+                return false;
+            }
+
+            return true;
+        },
+        validEmail: function (email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        }
+
+    }, Vuex.mapActions(['verificarSucVirt'])),
+
+    computed: Object.assign({},
+        Vuex.mapState(['pass', 'email', 'objError', 'opt_in'])),
+
+    updated() {
+
+        if (this.objError.codigo == 1) {
+            var form = document.getElementsByClassName('user-auth')[0];
+            var button = document.getElementsByClassName('btn-primary');
+            var toastError = document.getElementsByClassName('toast-error');
+            var toastInfo = document.getElementsByClassName('toast-info')[0];
+
+            form.classList.add('was-validated');
+            toastInfo.classList.remove('show');
+            toastError[0].classList.add('show');
+            
+            setTimeout(function () {
+                toastError[0].classList.remove('show');
+                toastInfo.classList.add('show');
+                form.classList.remove('was-validated');
+                form.querySelectorAll('input[type=email]')[0].focus();
+                button[0].removeAttribute('disabled');
+            }, 2750);
+            this.$store.commit('updateMensajeError', { mensaje: '', codigo: 0 })
+
+        } 
+    },
+    mounted() {
+
+        if (this.objError.codigo === 2) {
+            var form = document.getElementsByClassName('user-auth')[0];
+            var button = document.getElementsByClassName('btn-primary');
+            var toastError = document.getElementsByClassName('toast-error');
+            var toastInfo = document.getElementsByClassName('toast-info')[0];
+
+            // form.classList.add('was-validated');
+
+            toastInfo.classList.remove('show');
+
+            toastError[1].classList.add('show');
+
+            setTimeout(function () {
+                toastError[1].classList.remove('show');
+                toastInfo.classList.add('show');
+                // form.classList.remove('was-validated');
+                // form.querySelectorAll('input[type=email]')[0].focus();
+                // button[0].removeAttribute('disabled');
+            }, 2750);
+
+            this.$store.commit('updateMensajeError', { mensaje: '', codigo: 0 })
+
+        }
+    }
+})

